@@ -24,7 +24,8 @@ When you run this command, then you observe that the output of the file clearly 
  
 Output excerpt
 
----
+[source,xml]
+-------------------------------------------
    <dependency>
       <groupId>com.teamtter.fake</groupId>
       <artifactId>aaa-depends-on-logback</artifactId>
@@ -44,7 +45,7 @@ Output excerpt
       <scope>compile</scope>
     </dependency>
   </dependencies>
----
+-------------------------------------------
 
 === new scala plugin is ko
 
@@ -54,7 +55,8 @@ When you run this command with `-Dnew` activating the switch to the new scala pl
  
 Output excerpt
 
----
+[source,xml]
+-------------------------------------------
    <dependency>
       <groupId>com.teamtter.fake</groupId>
       <artifactId>aaa-depends-on-logback</artifactId>
@@ -68,4 +70,4 @@ Output excerpt
       <scope>compile</scope>
     </dependency>
   </dependencies>
----
+-------------------------------------------
