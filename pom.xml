@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.teamtter.fake</groupId>
+	<artifactId>test-scala-maven-plugin-issue-382</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>aaa-depends-on-logback</module>
+		<module>bbb-depends-on-aaa-excludes-logback</module>
+		<module>scala-module</module>
+		<module>shaded-module</module>
+	</modules>
+
+	<properties>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+
+			</plugins>
+		</pluginManagement>
+		<plugins>
+
+		</plugins>
+	</build>
+
+</project>

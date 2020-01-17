@@ -1,0 +1,71 @@
+:toc: macro
+
+toc::[]
+
+== what ?
+
+This multimodule maven plugin demonstrates a problem in https://github.com/davidB/scala-maven-plugin[scala-maven-plugin]
+
+An issue has been opened in the bug tracker: https://github.com/davidB/scala-maven-plugin/issues/382
+
+Problem is that if this plugin is present in the Maven reactor, then it affects the behavior of Maven when computing the dependency graph 
+(this is visible in the output of the `maven-shade-plugin` in file `dependency-reduced-pom.xml`)
+
+When using the old version `org.scala-tools:maven-scala-plugin:2.15.2` this is OK
+but when using the new version `net.alchim31.maven:scala-maven-plugin:4.3.0` this is KO.
+
+== how to use
+
+=== old scala plugin is ok
+
+When you run this command, then you observe that the output of the file clearly contains an exclusion of `logback-classic`
+
+ mvn clean install && cat ./shaded-module/dependency-reduced-pom.xml
+ 
+Output excerpt
+
+---
+   <dependency>
+      <groupId>com.teamtter.fake</groupId>
+      <artifactId>aaa-depends-on-logback</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>logback-classic</artifactId>
+          <groupId>ch.qos.logback</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>2.11.12</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+---
+
+=== new scala plugin is ko
+
+When you run this command with `-Dnew` activating the switch to the new scala plugin then you observe that the generated pom does NOT excludes `logback-classic`
+
+ mvn clean install -Dnew && cat ./shaded-module/dependency-reduced-pom.xml
+ 
+Output excerpt
+
+---
+   <dependency>
+      <groupId>com.teamtter.fake</groupId>
+      <artifactId>aaa-depends-on-logback</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>compile</scope>
+      <!-- ==== MISSING EXCLUSION HERE ! ==== -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>2.11.12</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+---
